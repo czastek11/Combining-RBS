@@ -8,7 +8,7 @@ using namespace std;
 bool* load_QTlist(int& give_size, string filename)
 {
     ifstream kwantowy_ciag;
-    kwantowy_ciag.open(filename, ios::binary); //robimy w binarnym wiec musi byc w ten sposob
+    kwantowy_ciag.open(filename, ios::binary); //converting from bytes to bool representation of bits
     if (kwantowy_ciag.good())
     {
         //Get the size of the file in bytes
@@ -25,7 +25,7 @@ bool* load_QTlist(int& give_size, string filename)
         kwantowy_ciag.read(buffer, file_size);
         //bity w bool
         bool* bits = new bool[file_size * 8];
-        for (int i = 0; i < file_size; i++) //przepisuje bity z kazdego bajta
+        for (int i = 0; i < file_size; i++) 
         {
             for (int j = 0; j < 8; j++)
             {
@@ -40,7 +40,7 @@ bool* load_QTlist(int& give_size, string filename)
     return NULL;
 }
 
-void write_QTlist(bool* list, int size, string filename)
+void write_QTlist(bool* list, int size, string filename) //conveting arrays of bool's (representing bits) into binary file of bytes
 {
     ofstream outFile(filename, ios::binary);
     if (outFile.good())
@@ -101,7 +101,7 @@ int main()
     }*/
     int smallblock=2000;
     cout<<size<<endl;
-    for(int j=0;j<size/smallblock;j++)
+    for(int j=0;j<size/smallblock;j++) //taking block from file 1 and from file 2, XORing them and writing result in 3 blocks. Then all 3 blocks are written one after another in array
     {
         int start=j*smallblock*3;
         for (int i = start; i < start+smallblock; i++)
